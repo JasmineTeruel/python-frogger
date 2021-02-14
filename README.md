@@ -105,3 +105,29 @@ Lastly, we add each car to we've made to our variable "super_list".
 ```
 
 # Moving our frog
+First, we can write code that allows our frog to move left and right. This can be done by defining functions like move_left() and move_right.
+When we want to move our characters, we first consider how far they can move left or right, in this case this is decided by our screen size. We check if they are still in screen with an "if" function and if they are we will allow them to move a certain distance in the chosen direction.
+```
+def move_left():
+    if frog.xcor()>-360:
+        frog.setx(frog.xcor()-40)
+
+
+def move_right():
+    if frog.xcor()<= 340:
+        frog.setx(frog.xcor()+40)
+```
+Next, we will code our frog jumping (moving upwards), or in this case, since we shift our y axis in accordance to our charaacter, we shift everything but the frogs downwards. This means that for all the cars that we have, we move each of the lists downwards. We use the corresponding values, the shifting_yaxis and our super_list to do this.
+```
+def jump():
+    global shifting_yaxis
+    
+    frog.jump = 'go'
+    shifting_yaxis -= 30
+    
+    for i in super_list:
+        for j in i:    
+            j.goto(j.xcor(), shifting_yaxis + j.y)
+```
+
+# Moving our cars
