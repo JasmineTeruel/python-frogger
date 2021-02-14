@@ -131,3 +131,40 @@ def jump():
 ```
 
 # Moving our cars
+Now we focus on moving our cars across the screen from right to left, and ensuring we don't run out of cars to cross through as we play the game.
+To do this, we will make one function that utilises our initial variables we called "yvalues", to ensure that when our cars go below the screen, we can simply reset that list 800 pixels higher, essentially reusing the same list multiple times and not having to create new cars every time we go past four roads. With moving left or right, we simply have to change their x and y coordinate according to a certain distance, in this case we use a distance of 2 pixels. We can also check if the car's x coordinate is past our screen and remove it from the list if it is.
+Of course, we will iterate through our list of our list of cars, which is our "super_list".
+```
+def move_cars():  # Values may have to be adjusted in windows eg 0.02 instead of 2????
+    global yvalue1
+    global yvalue2
+    global yvalue3
+    global yvalue4
+    
+    for i in super_list: # For the list in superlist
+        for j in i: # for each car in the list
+
+            # Move cars left or right
+            j.goto(j.xcor()+ j.dx, j.ycor())
+
+            # If car is out screen left or right, remove from list
+            if j.xcor() < -420 and j.dx == -2: 
+                j.goto(1000,1000)
+                j.list.remove(j)
+            elif j.xcor()>420 and j.dx == 2:
+                j.goto(1000,1000)
+                j.list.remove(j)
+
+            # If cars go below the screen, reset that list 800 pixels higher    
+            if j.ycor()<-320:
+                if j.y == yvalue1:
+                    yvalue1 += 800
+                elif j.y == yvalue2:
+                    yvalue2 += 800 
+                elif j.y == yvalue3:
+                    yvalue3 += 800
+                elif j.y == yvalue4:
+                    yvalue4 += 800
+```
+
+# Our win condition
