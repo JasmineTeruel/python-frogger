@@ -39,7 +39,7 @@ car_list, car_list2, car_list3, car_list4 = [], [], [], []
 super_list = [car_list, car_list2, car_list3, car_list4]
 amount_cars = 12
 ```
-Next, we make some initial y-values for our cars, so we can reuse the same lists as we move up the screen. To avoid repetition, notice that we made four lists of cars, which means four different patterns that randomise when our frog goes "up" the screen, or when the cars go below the screen.
+Next, we make some initial y-values for our cars, so we can reuse the same car lists as we move up the screen. To avoid repetition, notice that we made four lists of cars, which means four different patterns that randomise when our frog goes "up" the screen, or when the cars go below the screen.
 ```
 yvalue1 = 0
 yvalue2 = 180
@@ -48,4 +48,60 @@ yvalue4 = 560
 ```
 
 # Creating our cars
-Next, we will make a function that 
+Next, we will make a function that initialises our cars.
+To do this, we will be using and editing variables from outside this function, namely the variables we recently set for our cars.
+We start off with:
+```
+def running_cars():
+    global shifting_yaxis
+    
+    global yvalue1
+    global yvalue2
+    global yvalue3
+    global yvalue4
+    
+```
+Next, we create a "for" loop that iterates for each list that is inside our variable "super_list".
+We first add a line that creats a delay, meaning that we will make the cars have gaps our frog can jump through.
+```
+    for i in super_list:
+        delay = random.random() 
+```
+Next, we make an "if" statement that checks if the number of cars that we allow for each car_list is 12 and our delay is less than 0.02. If it is, we create the cars with turtle.
+```
+        if len(i) < amount_cars and delay < 0.02: # Can play around with delay threshold
+            car = turtle.Turtle()
+            car.shape('square')
+            car.shapesize(2,2)
+            car.up()
+            car.list = i
+```
+The last line refers to the next "if" statements, where we create our cars with specific colours for the lines that they are in, creating a different road that we can cross with our frog. We will also ensure that the cars are constructed by their turtles in the correct place by ensuring that we answer for the shifting axis's changes with each of our frog's jumps.
+```
+            if car.list == car_list:
+                car.dx = -2
+                car.y = yvalue1
+                car.color('red')
+                car.goto(420, shifting_yaxis + car.y)
+            elif car.list == car_list2:
+                car.dx = -2
+                car.y = yvalue2
+                car.color('blue')
+                car.goto(420, shifting_yaxis + car.y)
+            elif car.list == car_list3:
+                car.dx = 2
+                car.y = yvalue3
+                car.color('yellow')
+                car.goto(-420, shifting_yaxis + car.y)
+            elif car.list == car_list4:
+                car.dx = 2
+                car.y = yvalue4
+                car.color('green')
+                car.goto(-420, shifting_yaxis + car.y)
+```
+Lastly, we add each car to we've made to our variable "super_list".
+```
+            i.append(car)
+```
+
+# Moving our frog
