@@ -168,3 +168,39 @@ def move_cars():  # Values may have to be adjusted in windows eg 0.02 instead of
 ```
 
 # Our win condition
+The original arcade game of Frogger was actually a survival game, where the game only ends once you lose. Losing means that the frog has to be hit by a car. This means that for each of the cars in our super_list, we have to check that once the distance from the car and the frog is less than 50, the game is over as our frog has been hit by a car.
+```
+def collision_check():
+    global game_over # game_over variable from outside this function
+
+    for i in super_list:
+        for j in i:
+            if j.distance(frog)<50:
+                game_over = True
+```
+
+# Initiating our game
+Before we make a initialise a new game by calling the functions we have written, we first have to dedicate keys to moving our frog. We do this by using listen() from turtle. We call our window and listen for the arrow keys, which are defined by strings 'Left', 'Right' and 'Up' for jump.
+```
+win.listen()
+win.onkey(move_left, 'Left')
+win.onkey(move_right, 'Right')
+win.onkey(jump, 'Up')
+```
+Next, we initialise our game. We repeatedly check that the game is not over, and if it isn't, we call our functions and update it.
+```
+while not game_over:
+    win.update()
+    time.sleep(0.017) # windows?
+    
+    running_cars()
+    move_cars()
+    collision_check()
+```
+Take note of the line "time.sleep(0.017)" as this call only works in Windows operating system. If the code is being run on MacOS, this line will need to be removed.
+Lastly, we update our window for when the game is over, or when the line "while not game over" becomes false.
+```
+win.update() # needed due to win.tracer(0) 
+pen.goto(0,0)
+pen.write('GAME OVER', align='center', font=('Courier', 36, 'normal'))
+```
